@@ -1,0 +1,60 @@
+{
+    "name": "tenolo/faq-bundle",
+    "description": "Implements faq functions.",
+    "keywords": [
+        "faq",
+        "tenolo",
+        "symfony",
+        "bundle"
+    ],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "homepage": "http://tenolo.de",
+    "authors": [
+        {
+            "name": "tenolo - Robert Bernis, Johannes Herberhold GbR",
+            "email": "info@tenolo.de",
+            "homepage": "http://tenolo.de"
+        },
+        {
+            "name": "Nikita Loges",
+            "email": "n.loges@tenolo.de"
+        }
+    ],
+    "require": {
+        "php": "~5.5|~7.0",
+
+        "symfony/framework-bundle": "~2.8|~3.0",
+        "symfony/http-kernel": "~2.8|~3.0",
+        "symfony/config": "~2.8|~3.0",
+        "symfony/dependency-injection": "~2.8|~3.0",
+
+        "tenolo/entity-bundle": "~2.0|~3.0"
+    },
+    "require-dev": {
+        "symfony/phpunit-bridge": "~2.8|~3.0"
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.tenolo.com/repo/private/"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Tenolo\\Bundle\\FAQBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tenolo\\Bundle\\FAQBundle\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-release/1.0": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
