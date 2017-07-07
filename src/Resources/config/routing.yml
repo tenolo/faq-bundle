@@ -1,0 +1,3 @@
+tenolo_faq:
+    resource: "@TenoloFAQBundle/Controller"
+    type:     annotation

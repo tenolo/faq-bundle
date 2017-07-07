@@ -7,6 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\HttpKernel\DependencyInjection\ConfigurableExtension;
+use Tenolo\Bundle\FAQBundle\Entity as BundleEntity;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces as BundleInterfaces;
 
 /**
  * Class TenoloFAQExtension
@@ -32,13 +34,21 @@ class TenoloFAQExtension extends ConfigurableExtension implements PrependExtensi
      */
     public function prepend(ContainerBuilder $container)
     {
-        $doctrine = [
+        $container->prependExtensionConfig('doctrine', $this->getDoctrineConfig());
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDoctrineConfig()
+    {
+        return [
             'orm' => [
                 'resolve_target_entities' => [
+                    BundleInterfaces\CategoryInterface::class => BundleEntity\Category::class,
+                    BundleInterfaces\QuestionInterface::class => BundleEntity\Question::class,
                 ]
             ]
         ];
-
-        $container->prependExtensionConfig('doctrine', $doctrine);
     }
 }
