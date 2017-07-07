@@ -1,10 +1,9 @@
-
-<h2>Category {{ category.headline }}</h2>
-<p>{{ category.body }}</p>
+<h2>Category {{ category.name }}</h2>
+<p>{{ category.content }}</p>
 <ul>
     {% for question in category.sortedQuestions %}
-    <li>
-        <a href="{{ path(question.routeName, question.routeParameters) }}">{{ question.headline|e }}</a>
-    </li>
+        <li>
+            <a href="{{ path('tenolo_faq_question_show', { question: question.id, slug: question.slug }) }}">{{ question.name|e }}</a>
+        </li>
     {% endfor %}
 </ul>

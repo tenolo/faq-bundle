@@ -12,6 +12,8 @@ use Tenolo\Bundle\EntityBundle\Entity\Scheme\Name;
 use Tenolo\Bundle\EntityBundle\Entity\Scheme\SortOrder;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
+use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\DefaultRawMaterial;
+use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\Slugify;
 
 /**
  * Class Category
@@ -26,6 +28,8 @@ class Category extends BaseEntity implements CategoryInterface
     use Name;
     use Enable;
     use SortOrder;
+    use Slugify;
+    use DefaultRawMaterial;
 
     /**
      * @var ArrayCollection|PersistentCollection|QuestionInterface[]
@@ -108,7 +112,7 @@ class Category extends BaseEntity implements CategoryInterface
     public function getSortedQuestions()
     {
         $criteria = Criteria::create();
-        $criteria->orderBy(['rank' => 'ASC']);
+        $criteria->orderBy(['sortOrder' => 'ASC']);
 
         return $this->getQuestions()->matching($criteria);
     }

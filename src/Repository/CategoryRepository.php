@@ -19,11 +19,11 @@ class CategoryRepository extends BaseEntityRepository
     public function findActive()
     {
         $query = $this->getQueryBuilder()
-            ->where('p.active = :active')
+            ->where('p.enable = :enable')
             ->orderBy('p.sortOrder', 'ASC')
             ->getQuery();
 
-        $query->setParameter('active', true);
+        $query->setParameter('enable', true);
 
         return $query->execute();
     }
@@ -34,12 +34,12 @@ class CategoryRepository extends BaseEntityRepository
     public function retrieveFirst()
     {
         $query = $this->getQueryBuilder()
-            ->where('p.isActive = :active')
+            ->where('p.enable = :enable')
             ->orderBy('p.sortOrder', 'ASC')
             ->setMaxResults(1)
             ->getQuery();
 
-        $query->setParameter('active', true);
+        $query->setParameter('enable', true);
 
         return $query->getOneOrNullResult();
     }

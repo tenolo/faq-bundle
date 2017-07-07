@@ -8,6 +8,7 @@ use Tenolo\Bundle\EntityBundle\Entity\Interfaces\BaseEntityInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\EnableInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\NameInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\SortOrderInterface;
+use Tenolo\Bundle\SlugifyBundle\Entity\Interfaces\SlugifyInterface;
 
 /**
  * Interface CategoryInterface
@@ -16,7 +17,7 @@ use Tenolo\Bundle\EntityBundle\Entity\Interfaces\SortOrderInterface;
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-interface CategoryInterface extends BaseEntityInterface, NameInterface, EnableInterface, SortOrderInterface
+interface CategoryInterface extends BaseEntityInterface, NameInterface, EnableInterface, SortOrderInterface, SlugifyInterface
 {
 
     /**

@@ -6,6 +6,7 @@ use Tenolo\Bundle\EntityBundle\Entity\Interfaces\BaseEntityInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\EnableInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\NameInterface;
 use Tenolo\Bundle\EntityBundle\Entity\Interfaces\SortOrderInterface;
+use Tenolo\Bundle\SlugifyBundle\Entity\Interfaces\SlugifyInterface;
 
 /**
  * Interface QuestionInterface
@@ -14,7 +15,7 @@ use Tenolo\Bundle\EntityBundle\Entity\Interfaces\SortOrderInterface;
  * @author  Nikita Loges
  * @company tenolo GbR
  */
-interface QuestionInterface extends BaseEntityInterface, NameInterface, EnableInterface, SortOrderInterface
+interface QuestionInterface extends BaseEntityInterface, NameInterface, EnableInterface, SortOrderInterface, SlugifyInterface
 {
 
     /**

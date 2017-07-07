@@ -9,11 +9,12 @@ use Tenolo\Bundle\EntityBundle\Entity\Scheme\Name;
 use Tenolo\Bundle\EntityBundle\Entity\Scheme\SortOrder;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
+use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\DefaultRawMaterial;
+use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\Slugify;
 
 /**
  * Class Question
  *
- * @ORM\MappedSuperclass
  * @ORM\Entity(repositoryClass="Tenolo\Bundle\FAQBundle\Repository\QuestionRepository")
  *
  * @package Tenolo\Bundle\FAQBundle\Entity
@@ -23,6 +24,8 @@ class Question extends BaseEntity implements QuestionInterface
     use Name;
     use Enable;
     use SortOrder;
+    use Slugify;
+    use DefaultRawMaterial;
 
     /**
      * @var CategoryInterface
@@ -48,6 +51,16 @@ class Question extends BaseEntity implements QuestionInterface
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $expiresAt;
+
+    /**
+     * @inheritDoc
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->setPublishAt(new \DateTime());
+    }
 
     /**
      * @return CategoryInterface

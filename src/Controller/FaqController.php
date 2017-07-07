@@ -2,10 +2,7 @@
 
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
-use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 
 /**
  * Class FaqController
@@ -24,13 +21,12 @@ class FaqController extends Controller
     {
         $categories = $this->getCategoryRepository()->findActive();
 
-        // Throw 404 if there is no category in the database
         if (!$categories) {
             throw $this->createNotFoundException('You need at least 1 active faq category in the database');
         }
 
         return $this->render(
-            'GenjFaqBundle:Faq:index.html.twig',
+            $this->getParameter('tenolo_faq.templates.faq.index'),
             [
                 'categories' => $categories,
             ]
@@ -47,37 +43,16 @@ class FaqController extends Controller
         $categories = $this->getCategoryRepository()->findActive();
         $category = $this->getCategoryRepository()->find($category);
 
-        // Throw 404 if there is no category in the database
         if (!$category || !$categories) {
             throw $this->createNotFoundException('You need at least 1 active faq category in the database');
         }
 
-        if ($category) {
-            $questions = $category->getSortedQuestions();
-        }
-
         return $this->render(
-            'GenjFaqBundle:Faq:index.html.twig',
+            $this->getParameter('tenolo_faq.templates.faq.index'),
             [
-                'categories'       => $categories,
-                'selectedCategory' => $category,
+                'categories' => $categories,
+                'category'   => $category,
             ]
         );
-    }
-
-    /**
-     * @return \Tenolo\Bundle\FAQBundle\Repository\QuestionRepository
-     */
-    protected function getQuestionRepository()
-    {
-        return $this->getDoctrine()->getRepository(QuestionInterface::class);
-    }
-
-    /**
-     * @return \Tenolo\Bundle\FAQBundle\Repository\CategoryRepository
-     */
-    protected function getCategoryRepository()
-    {
-        return $this->getDoctrine()->getRepository(CategoryInterface::class);
     }
 }

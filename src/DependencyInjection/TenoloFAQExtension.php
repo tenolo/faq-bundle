@@ -27,6 +27,11 @@ class TenoloFAQExtension extends ConfigurableExtension implements PrependExtensi
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
+
+        $container->setParameter('tenolo_faq.templates.faq.index', $configs['templates']['faq']['index']);
+        $container->setParameter('tenolo_faq.templates.category.index', $configs['templates']['category']['show']);
+        $container->setParameter('tenolo_faq.templates.question.most_recent', $configs['templates']['question']['most_recent']);
+        $container->setParameter('tenolo_faq.templates.question.show', $configs['templates']['question']['show']);
     }
 
     /**

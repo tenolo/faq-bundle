@@ -2,7 +2,6 @@
 
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 
@@ -32,7 +31,7 @@ class QuestionController extends Controller
         }
 
         return $this->render(
-            'TenoloFAQBundle:Question:show.html.twig',
+            $this->getParameter('tenolo_faq.templates.question.show'),
             [
                 'question' => $question
             ]
@@ -51,19 +50,11 @@ class QuestionController extends Controller
         $questions = $this->getQuestionRepository()->retrieveMostRecent($max);
 
         return $this->render(
-            'TenoloFAQBundle:Question:list_most_recent.html.twig',
+            $this->getParameter('tenolo_faq.templates.question.most_recent'),
             [
                 'questions' => $questions,
                 'max'       => $max
             ]
         );
-    }
-
-    /**
-     * @return \Tenolo\Bundle\FAQBundle\Repository\QuestionRepository
-     */
-    protected function getQuestionRepository()
-    {
-        return $this->getDoctrine()->getRepository(QuestionInterface::class);
     }
 }

@@ -1,37 +1,24 @@
-<h1>GenjFaqBundle</h1>
+<h1>Tenolo FAQ Bundle</h1>
 <p>
-    Welcome to the GenjFaqBundle example template.
+    Welcome to the Tenolo FAQ Bundle example template.
 </p>
 
 <h2>Categories</h2>
 <ul>
-    {% for category in categories %}
-        {% if selectedCategory.slug is defined and selectedCategory.slug == category.slug%}
-            <li class="active"  >
-                <strong>{{ category.headline|e }}</strong>
-            </li>
-        {% else %}
-            <li>
-                <a href="{{ path('genj_faq_faq_index', { 'categorySlug': category.slug }) }}">{{ category.headline|e }}</a>
-            </li>
-        {% endif %}
+    {% for cat in categories %}
+        <li>
+            <a href="{{ path('tenolo_faq_show', { category: cat.id, slug: cat.slug }) }}">{{ cat.name|e }}</a>
+        </li>
     {% endfor %}
 </ul>
 
-{% if selectedCategory is not null %}
+{% if category is defined and category is not null %}
     <h2>Questions</h2>
     <ul>
-        {% for question in questions %}
-            {% if selectedQuestion.slug is defined and selectedQuestion.slug == question.slug%}
-                <li class="active"  >
-                    <strong>{{ question.headline|e }}</strong>
-                    <div>{{ selectedQuestion.body }}</div>
-                </li>
-            {% else %}
-                <li>
-                    <a href="{{ path('genj_faq_faq_index', { 'categorySlug': selectedCategory.slug, 'questionSlug': question.slug }) }}">{{ question.headline|e }}</a>
-                </li>
-            {% endif %}
+        {% for question in category.sortedQuestions %}
+            <li>
+                <a href="{{ path('tenolo_faq_question_show', { question: question.id, slug: question.slug }) }}">{{ question.name|e }}</a>
+            </li>
         {% endfor %}
     </ul>
 {% endif %}

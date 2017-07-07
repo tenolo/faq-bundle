@@ -2,9 +2,7 @@
 
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 
 /**
  * Class CategoryController
@@ -30,18 +28,10 @@ class CategoryController extends Controller
         }
 
         return $this->render(
-            'TenoloFAQBundle:Category:show.html.twig',
+            $this->getParameter('tenolo_faq.templates.category.show'),
             [
                 'category' => $category
             ]
         );
-    }
-
-    /**
-     * @return \Tenolo\Bundle\FAQBundle\Repository\CategoryRepository
-     */
-    protected function getCategoryRepository()
-    {
-        return $this->getDoctrine()->getRepository(CategoryInterface::class);
     }
 }
