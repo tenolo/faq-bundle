@@ -21,10 +21,6 @@ class FaqController extends Controller
     {
         $categories = $this->getCategoryRepository()->findActive();
 
-        if (!$categories) {
-            throw $this->createNotFoundException('You need at least 1 active faq category in the database');
-        }
-
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
             [

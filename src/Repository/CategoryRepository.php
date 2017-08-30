@@ -18,14 +18,15 @@ class CategoryRepository extends BaseEntityRepository
      */
     public function findActive()
     {
-        $query = $this->getQueryBuilder()
-            ->where('p.enable = :enable')
-            ->orderBy('p.sortOrder', 'ASC')
-            ->getQuery();
+        $qb = $this->getQueryBuilder();
+        $expr = $qb->expr();
 
-        $query->setParameter('enable', true);
+        $qb->where($expr->eq('p.enable', ':enable'));
+        $qb->orderBy('p.sortOrder', 'ASC');
 
-        return $query->execute();
+        $qb->setParameter('enable', true);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
@@ -33,14 +34,16 @@ class CategoryRepository extends BaseEntityRepository
      */
     public function retrieveFirst()
     {
-        $query = $this->getQueryBuilder()
-            ->where('p.enable = :enable')
-            ->orderBy('p.sortOrder', 'ASC')
-            ->setMaxResults(1)
-            ->getQuery();
+        $qb = $this->getQueryBuilder();
+        $expr = $qb->expr();
 
-        $query->setParameter('enable', true);
+        $qb->where($expr->eq('p.enable', ':enable'));
+        $qb->orderBy('p.sortOrder', 'ASC');
+        $qb->setMaxResults(1);
+        $qb->getQuery();
 
-        return $query->getOneOrNullResult();
+        $qb->setParameter('enable', true);
+
+        return $qb->getQuery()->getOneOrNullResult();
     }
 }
