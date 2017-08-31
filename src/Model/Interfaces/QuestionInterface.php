@@ -19,14 +19,14 @@ interface QuestionInterface extends BaseEntityInterface, NameInterface, EnableIn
 {
 
     /**
-     * @return CategoryInterface
+     * @return CategoryInterface|null
      */
     public function getCategory();
 
     /**
-     * @param CategoryInterface $category
+     * @param CategoryInterface|null $category
      */
-    public function setCategory(CategoryInterface $category);
+    public function setCategory(CategoryInterface $category = null);
 
     /**
      * @return string

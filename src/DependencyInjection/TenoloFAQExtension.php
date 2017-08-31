@@ -29,7 +29,7 @@ class TenoloFAQExtension extends ConfigurableExtension implements PrependExtensi
         $loader->load('services.yml');
 
         $container->setParameter('tenolo_faq.templates.faq.index', $configs['templates']['faq']['index']);
-        $container->setParameter('tenolo_faq.templates.category.index', $configs['templates']['category']['show']);
+        $container->setParameter('tenolo_faq.templates.category.show', $configs['templates']['category']['show']);
         $container->setParameter('tenolo_faq.templates.question.most_recent', $configs['templates']['question']['most_recent']);
         $container->setParameter('tenolo_faq.templates.question.show', $configs['templates']['question']['show']);
     }

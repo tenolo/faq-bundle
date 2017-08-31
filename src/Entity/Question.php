@@ -63,7 +63,7 @@ class Question extends BaseEntity implements QuestionInterface
     }
 
     /**
-     * @return CategoryInterface
+     * @return CategoryInterface|null
      */
     public function getCategory()
     {
@@ -71,9 +71,9 @@ class Question extends BaseEntity implements QuestionInterface
     }
 
     /**
-     * @param CategoryInterface $category
+     * @param CategoryInterface|null $category
      */
-    public function setCategory(CategoryInterface $category)
+    public function setCategory(CategoryInterface $category = null)
     {
         $this->category = $category;
     }

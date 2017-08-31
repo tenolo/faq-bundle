@@ -2,6 +2,7 @@
 
 namespace Tenolo\Bundle\FAQBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
 use Tenolo\Bundle\EntityBundle\Repository\BaseEntityRepository;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 
@@ -21,10 +22,7 @@ class CategoryRepository extends BaseEntityRepository
         $qb = $this->getQueryBuilder();
         $expr = $qb->expr();
 
-        $qb->where($expr->eq('p.enable', ':enable'));
-        $qb->orderBy('p.sortOrder', 'ASC');
-
-        $qb->setParameter('enable', true);
+        $this->applyEnabledQuery($qb);
 
         return $qb->getQuery()->getResult();
     }
@@ -37,13 +35,22 @@ class CategoryRepository extends BaseEntityRepository
         $qb = $this->getQueryBuilder();
         $expr = $qb->expr();
 
-        $qb->where($expr->eq('p.enable', ':enable'));
-        $qb->orderBy('p.sortOrder', 'ASC');
+        $this->applyEnabledQuery($qb);
         $qb->setMaxResults(1);
-        $qb->getQuery();
-
-        $qb->setParameter('enable', true);
 
         return $qb->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @param QueryBuilder $qb
+     */
+    protected function applyEnabledQuery(QueryBuilder $qb)
+    {
+        $expr = $qb->expr();
+
+        $qb->where($expr->eq('p.enable', ':enable'));
+        $qb->orderBy('p.sortOrder', 'ASC');
+
+        $qb->setParameter('enable', true);
     }
 }
