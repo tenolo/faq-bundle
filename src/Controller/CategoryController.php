@@ -30,6 +30,7 @@ class CategoryController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.category.show'),
             [
+                'categories' => $this->getCategoryRepository()->findActive(),
                 'category' => $category
             ]
         );

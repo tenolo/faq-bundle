@@ -41,6 +41,12 @@ class Question extends BaseEntity implements QuestionInterface
     protected $content;
 
     /**
+     * @var boolean
+     * @ORM\Column(type="boolean", options={"default": false})
+     */
+    protected $top = false;
+
+    /**
      * @var \DateTime
      * @ORM\Column(type="datetime")
      */
@@ -92,6 +98,22 @@ class Question extends BaseEntity implements QuestionInterface
     public function setContent($content)
     {
         $this->content = $content;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTop()
+    {
+        return $this->top;
+    }
+
+    /**
+     * @param bool $top
+     */
+    public function setTop($top)
+    {
+        $this->top = $top;
     }
 
     /**

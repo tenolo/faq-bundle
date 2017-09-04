@@ -33,7 +33,8 @@ class QuestionController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.question.show'),
             [
-                'question' => $question
+                'categories' => $this->getCategoryRepository()->findActive(),
+                'question'   => $question
             ]
         );
     }
@@ -52,8 +53,9 @@ class QuestionController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.question.most_recent'),
             [
-                'questions' => $questions,
-                'max'       => $max
+                'categories' => $this->getCategoryRepository()->findActive(),
+                'questions'  => $questions,
+                'max'        => $max
             ]
         );
     }

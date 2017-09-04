@@ -39,6 +39,16 @@ interface QuestionInterface extends BaseEntityInterface, NameInterface, EnableIn
     public function setContent($content);
 
     /**
+     * @return bool
+     */
+    public function isTop();
+
+    /**
+     * @param bool $top
+     */
+    public function setTop($top);
+
+    /**
      * @return \DateTime
      */
     public function getPublishAt();

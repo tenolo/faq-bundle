@@ -19,14 +19,11 @@ class FaqController extends Controller
      */
     public function indexAction()
     {
-        $categories = $this->getCategoryRepository()->findActive();
-        $questions = $this->getQuestionRepository()->findWithoutCategory();
-
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
             [
-                'categories' => $categories,
-                'questions'  => $questions,
+                'categories' => $this->getCategoryRepository()->findActive(),
+                'questions'  => $this->getQuestionRepository()->findTop(),
             ]
         );
     }

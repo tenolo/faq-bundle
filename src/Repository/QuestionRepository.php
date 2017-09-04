@@ -26,7 +26,7 @@ class QuestionRepository extends BaseEntityRepository
         $qb->join('p.category', 'c');
         $this->applyEnabledQuery($qb);
 
-        if($max) {
+        if ($max) {
             $qb->setMaxResults($max);
         }
 
@@ -46,7 +46,29 @@ class QuestionRepository extends BaseEntityRepository
         $this->applyEnabledQuery($qb);
         $qb->andWhere($expr->isNull('p.category'));
 
-        if($max) {
+        if ($max) {
+            $qb->setMaxResults($max);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * @param int $max
+     *
+     * @return array|QuestionInterface[]
+     */
+    public function findTop($max = null)
+    {
+        $qb = $this->getQueryBuilder();
+        $expr = $qb->expr();
+
+        $this->applyEnabledQuery($qb);
+        $qb->andWhere($expr->eq('p.top', ':top'));
+
+        $qb->setParameter('top', true);
+
+        if ($max) {
             $qb->setMaxResults($max);
         }
 
