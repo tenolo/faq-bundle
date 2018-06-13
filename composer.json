@@ -36,7 +36,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://repo.tenolo.com/repo/private/"
+            "url": "https://repo.tenolo.com/"
         }
     ],
     "autoload": {
