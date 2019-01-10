@@ -2,7 +2,9 @@
 
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
 
 /**
  * Class CategoryController
@@ -11,6 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CategoryController extends Controller
 {
+    /** @var CategoryManagerInterface */
+    protected $categoryManager;
+
+    /**
+     * @param CategoryManagerInterface $categoryManager
+     */
+    public function __construct(CategoryManagerInterface $categoryManager)
+    {
+        $this->categoryManager = $categoryManager;
+    }
 
     /**
      * @Route("/category/{category}-{slug}", name="tenolo_faq_category_show")
@@ -21,7 +33,7 @@ class CategoryController extends Controller
      */
     public function showAction($category)
     {
-        $category = $this->getCategoryRepository()->find($category);
+        $category = $this->categoryManager->getRepository()->find($category);
 
         if (!$category) {
             throw $this->createNotFoundException();
@@ -30,8 +42,8 @@ class CategoryController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.category.show'),
             [
-                'categories' => $this->getCategoryRepository()->findActive(),
-                'category' => $category
+                'categories' => $this->categoryManager->findActive(),
+                'category'   => $category
             ]
         );
     }

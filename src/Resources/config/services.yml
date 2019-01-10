@@ -1,1 +1,14 @@
 services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # controller
+    Tenolo\Bundle\FAQBundle\Controller\:
+        resource: '../../Controller/*'
+        public: true
+
+    # manager
+    Tenolo\Bundle\FAQBundle\Manager\:
+        resource: '../../Manager/*'

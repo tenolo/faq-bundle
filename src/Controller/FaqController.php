@@ -2,7 +2,10 @@
 
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
+use Tenolo\Bundle\FAQBundle\Manager\QuestionManagerInterface;
 
 /**
  * Class FaqController
@@ -11,6 +14,22 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class FaqController extends Controller
 {
+
+    /** @var CategoryManagerInterface */
+    protected $categoryManager;
+
+    /** @var QuestionManagerInterface */
+    protected $questionManager;
+
+    /**
+     * @param CategoryManagerInterface $categoryManager
+     * @param QuestionManagerInterface $questionManager
+     */
+    public function __construct(CategoryManagerInterface $categoryManager, QuestionManagerInterface $questionManager)
+    {
+        $this->categoryManager = $categoryManager;
+        $this->questionManager = $questionManager;
+    }
 
     /**
      * @Route("/", name="tenolo_faq_index")
@@ -22,8 +41,8 @@ class FaqController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
             [
-                'categories' => $this->getCategoryRepository()->findActive(),
-                'questions'  => $this->getQuestionRepository()->findTop(),
+                'categories' => $this->categoryManager->findActive(),
+                'questions'  => $this->questionManager->findTop(),
             ]
         );
     }
@@ -35,8 +54,8 @@ class FaqController extends Controller
      */
     public function showAction($category)
     {
-        $categories = $this->getCategoryRepository()->findActive();
-        $category = $this->getCategoryRepository()->find($category);
+        $categories = $this->categoryManager->findActive();
+        $category = $this->categoryManager->getRepository()->find($category);
 
         if (!$category || !$categories) {
             throw $this->createNotFoundException('You need at least 1 active faq category in the database');
