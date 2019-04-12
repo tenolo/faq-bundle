@@ -30,6 +30,7 @@ class Question extends BaseEntity implements QuestionInterface
     /**
      * @var CategoryInterface
      * @ORM\ManyToOne(targetEntity="Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface", inversedBy="questions")
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @ORM\OrderBy({"rank" = "asc"})
      */
     protected $category;
