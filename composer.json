@@ -33,12 +33,6 @@
 
         "tenolo/entity-bundle": "~1.0"
     },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://repo.tenolo.com/"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Tenolo\\Bundle\\FAQBundle\\": "src/"
