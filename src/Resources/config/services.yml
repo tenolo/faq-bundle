@@ -12,3 +12,7 @@ services:
     # manager
     Tenolo\Bundle\FAQBundle\Manager\:
         resource: '../../Manager/*'
+
+    # twig
+    Tenolo\Bundle\FAQBundle\Twig\:
+        resource: '../../Twig/*'
