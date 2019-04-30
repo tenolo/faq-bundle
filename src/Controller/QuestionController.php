@@ -4,7 +4,6 @@ namespace Tenolo\Bundle\FAQBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
-use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
 use Tenolo\Bundle\FAQBundle\Manager\QuestionManagerInterface;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 
@@ -16,19 +15,14 @@ use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 class QuestionController extends Controller
 {
 
-    /** @var CategoryManagerInterface */
-    protected $categoryManager;
-
     /** @var QuestionManagerInterface */
     protected $questionManager;
 
     /**
-     * @param CategoryManagerInterface $categoryManager
      * @param QuestionManagerInterface $questionManager
      */
-    public function __construct(CategoryManagerInterface $categoryManager, QuestionManagerInterface $questionManager)
+    public function __construct(QuestionManagerInterface $questionManager)
     {
-        $this->categoryManager = $categoryManager;
         $this->questionManager = $questionManager;
     }
 
@@ -37,8 +31,8 @@ class QuestionController extends Controller
      *
      * @param int $question
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      */
     public function showAction($question)
     {
@@ -52,8 +46,7 @@ class QuestionController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.question.show'),
             [
-                'categories' => $this->categoryManager->findActive(),
-                'question'   => $question
+                'question' => $question,
             ]
         );
     }
@@ -72,9 +65,8 @@ class QuestionController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.question.most_recent'),
             [
-                'categories' => $this->categoryManager->findActive(),
-                'questions'  => $questions,
-                'max'        => $max
+                'questions' => $questions,
+                'max'       => $max,
             ]
         );
     }

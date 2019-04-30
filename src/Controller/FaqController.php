@@ -32,7 +32,7 @@ class FaqController extends Controller
     }
 
     /**
-     * @Route("/", name="tenolo_faq_index")
+     * @Route("", name="tenolo_faq_index")
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -64,7 +64,6 @@ class FaqController extends Controller
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
             [
-                'categories' => $categories,
                 'category'   => $category,
             ]
         );
