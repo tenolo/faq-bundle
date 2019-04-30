@@ -29,8 +29,17 @@
         "symfony/config": "~3.4|~4.0",
         "symfony/dependency-injection": "~3.4|~4.0",
         "symfony/form": "~3.4|~4.0",
-        "symfony/doctrine-bridge": "~3.4|~4.0",
+        "symfony/routing": "~3.4|~4.0",
+        "symfony/options-resolver": "~3.4|~4.0",
+        "symfony/doctrine-bundle": "~3.4|~4.0",
+        "symfony/yaml": "~3.4|~4.0",
+        "symfony/twig-bundle": "~3.4|~4.0",
 
+        "doctrine/common": "~2.6",
+        "doctrine/orm": "~2.5",
+        "doctrine/doctrine-bundle": "~1.6",
+
+        "tenolo/slugify-bundle": "~1.5",
         "tenolo/entity-bundle": "~1.0"
     },
     "autoload": {
