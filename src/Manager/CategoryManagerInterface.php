@@ -17,7 +17,7 @@ interface CategoryManagerInterface
 {
 
     /**
-     * @return mixed|CategoryInterface[]
+     * @return CategoryInterface[]
      */
     public function findActive();
 
