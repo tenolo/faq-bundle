@@ -5,7 +5,7 @@ namespace Tenolo\Bundle\FAQBundle\Manager;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\QueryBuilder;
-use RabeConcept\Shop\Component\FAQBundle\Model\Interfaces\CategoryInterface;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 use Tenolo\Bundle\FAQBundle\Repository\CategoryRepository;
 
 /**
