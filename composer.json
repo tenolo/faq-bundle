@@ -31,7 +31,7 @@
         "symfony/form": "~3.4|~4.0",
         "symfony/routing": "~3.4|~4.0",
         "symfony/options-resolver": "~3.4|~4.0",
-        "symfony/doctrine-bundle": "~3.4|~4.0",
+        "symfony/doctrine-bridge": "~3.4|~4.0",
         "symfony/yaml": "~3.4|~4.0",
         "symfony/twig-bundle": "~3.4|~4.0",
 
