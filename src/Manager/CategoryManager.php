@@ -59,12 +59,7 @@ class CategoryManager implements CategoryManagerInterface
      */
     protected function applyEnabledQuery(QueryBuilder $qb)
     {
-        $expr = $qb->expr();
-
-        $qb->where($expr->eq('p.enable', ':enable'));
-        $qb->orderBy('p.sortOrder', 'ASC');
-
-        $qb->setParameter('enable', true);
+        $this->getRepository()->applyEnabledQuery($qb);
     }
 
     /**
