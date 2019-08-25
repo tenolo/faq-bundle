@@ -39,7 +39,7 @@
         "doctrine/orm": "~2.5",
         "doctrine/doctrine-bundle": "~1.6",
 
-        "tenolo/slugify-bundle": "~1.5",
+        "tenolo/slugify-bundle": "~1.4",
         "tenolo/entity-bundle": "~1.0"
     },
     "autoload": {
