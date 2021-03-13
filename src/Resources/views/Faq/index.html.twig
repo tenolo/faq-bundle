@@ -15,7 +15,7 @@
 {% if category is defined and category is not null %}
     <h2>Questions</h2>
     <ul>
-        {% for question in category.sortedQuestions %}
+        {% for question in questions %}
             <li>
                 <a href="{{ path('tenolo_faq_question_show', { question: question.id, slug: question.slug }) }}">{{ question.name|e }}</a>
             </li>

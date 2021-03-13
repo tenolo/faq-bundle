@@ -1,49 +1,50 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
+use Tenolo\Bundle\FAQBundle\Manager\QuestionManagerInterface;
 
-/**
- * Class CategoryController
- *
- * @package Tenolo\Bundle\FAQBundle\Controller
- */
-class CategoryController extends Controller
+class CategoryController extends AbstractController
 {
     /** @var CategoryManagerInterface */
     protected $categoryManager;
 
-    /**
-     * @param CategoryManagerInterface $categoryManager
-     */
-    public function __construct(CategoryManagerInterface $categoryManager)
-    {
+    /** @var QuestionManagerInterface */
+    private $questionManager;
+
+    public function __construct(
+        CategoryManagerInterface $categoryManager,
+        QuestionManagerInterface $questionManager
+    ) {
         $this->categoryManager = $categoryManager;
+        $this->questionManager = $questionManager;
     }
 
     /**
      * @Route("/category/{category}-{slug}", name="tenolo_faq_category_show")
-     *
-     * @param int $category
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($category)
+    public function showAction(int $category): Response
     {
         $category = $this->categoryManager->getRepository()->find($category);
 
-        if (!$category) {
+        if ($category === null) {
             throw $this->createNotFoundException();
         }
+
+        $questions = $this->questionManager->findByCategory($category);
 
         return $this->render(
             $this->getParameter('tenolo_faq.templates.category.show'),
             [
                 'categories' => $this->categoryManager->findActive(),
-                'category'   => $category
+                'category'   => $category,
+                'questions'  => $questions,
             ]
         );
     }

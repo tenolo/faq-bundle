@@ -1,34 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Twig\Extension;
 
 use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
 use Tenolo\Bundle\FAQBundle\Manager\QuestionManagerInterface;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
-use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
-use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 
 /**
- * Class FaqExtension
- *
- * @package Tenolo\Bundle\FAQBundle\Twig\Extension
- * @author  Nikita Loges
  * @company tenolo GbR
  */
 class FaqExtension extends AbstractExtension
 {
-
     /** @var CategoryManagerInterface */
     protected $categoryManager;
 
     /** @var QuestionManagerInterface */
     protected $questionManager;
 
-    /**
-     * @param CategoryManagerInterface $categoryManager
-     * @param QuestionManagerInterface $questionManager
-     */
     public function __construct(CategoryManagerInterface $categoryManager, QuestionManagerInterface $questionManager)
     {
         $this->categoryManager = $categoryManager;
@@ -49,7 +42,7 @@ class FaqExtension extends AbstractExtension
     /**
      * @return array|CategoryInterface[]
      */
-    public function getActiveCategories()
+    public function getActiveCategories(): array
     {
         return $this->categoryManager->findActive();
     }
@@ -57,9 +50,8 @@ class FaqExtension extends AbstractExtension
     /**
      * @return array|QuestionInterface[]
      */
-    public function getTopQuestions()
+    public function getTopQuestions(): array
     {
         return $this->questionManager->findTop();
     }
-
 }

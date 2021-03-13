@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Tenolo\Bundle\EntityBundle\Entity\BaseEntity;
 use Tenolo\Bundle\EntityBundle\Entity\Scheme\Enable;
@@ -12,12 +15,10 @@ use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\DefaultRawMaterial;
 use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\Slugify;
 
+use function time;
+
 /**
- * Class Question
- *
  * @ORM\Entity(repositoryClass="Tenolo\Bundle\FAQBundle\Repository\QuestionRepository")
- *
- * @package Tenolo\Bundle\FAQBundle\Entity
  */
 class Question extends BaseEntity implements QuestionInterface
 {
@@ -28,138 +29,106 @@ class Question extends BaseEntity implements QuestionInterface
     use DefaultRawMaterial;
 
     /**
-     * @var CategoryInterface
      * @ORM\ManyToOne(targetEntity="Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface", inversedBy="questions")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      * @ORM\OrderBy({"rank" = "asc"})
+     *
+     * @var CategoryInterface|null
      */
     protected $category;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
      */
     protected $content;
 
     /**
-     * @var boolean
      * @ORM\Column(type="boolean", options={"default": false})
+     *
+     * @var bool
      */
     protected $top = false;
 
     /**
-     * @var \DateTime
      * @ORM\Column(type="datetime")
+     *
+     * @var DateTime
      */
     protected $publishAt;
 
     /**
-     * @var \DateTime
      * @ORM\Column(type="datetime", nullable=true)
+     *
+     * @var DateTime|null
      */
     protected $expiresAt;
 
-    /**
-     * @inheritDoc
-     */
     public function __construct()
     {
         parent::__construct();
 
-        $this->setPublishAt(new \DateTime());
+        $this->setPublishAt(new DateTime());
     }
 
-    /**
-     * @return CategoryInterface|null
-     */
-    public function getCategory()
+    public function getCategory(): ?CategoryInterface
     {
         return $this->category;
     }
 
-    /**
-     * @param CategoryInterface|null $category
-     */
-    public function setCategory(CategoryInterface $category = null)
+    public function setCategory(?CategoryInterface $category = null): void
     {
         $this->category = $category;
     }
 
-    /**
-     * @return string
-     */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @param string $content
-     */
-    public function setContent($content)
+    public function setContent(?string $content): void
     {
         $this->content = $content;
     }
 
-    /**
-     * @return bool
-     */
-    public function isTop()
+    public function isTop(): bool
     {
         return $this->top;
     }
 
-    /**
-     * @param bool $top
-     */
-    public function setTop($top)
+    public function setTop(bool $top): void
     {
         $this->top = $top;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getPublishAt()
+    public function getPublishAt(): DateTime
     {
         return $this->publishAt;
     }
 
-    /**
-     * @param \DateTime $publishAt
-     */
-    public function setPublishAt(\DateTime $publishAt)
+    public function setPublishAt(DateTime $publishAt): void
     {
         $this->publishAt = $publishAt;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getExpiresAt()
+    public function getExpiresAt(): ?DateTime
     {
         return $this->expiresAt;
     }
 
-    /**
-     * @param \DateTime $expiresAt
-     */
-    public function setExpiresAt(\DateTime $expiresAt = null)
+    public function setExpiresAt(?DateTime $expiresAt = null): void
     {
         $this->expiresAt = $expiresAt;
     }
 
-    /**
-     * Is visible for user?
-     *
-     * @return boolean
-     */
-    public function isPublic()
+    public function isPublic(): bool
     {
-        if ($this->isEnable() && ($this->getPublishAt()->getTimestamp() < time()) && (!$this->getExpiresAt() || $this->getExpiresAt()->getTimestamp() > time())) {
-            return true;
-        }
-
-        return false;
+        return $this->isEnable() &&
+            ($this->getPublishAt()->getTimestamp() < time()) &&
+            (
+                $this->getExpiresAt() === null ||
+                $this->getExpiresAt()->getTimestamp() > time()
+            );
     }
 }

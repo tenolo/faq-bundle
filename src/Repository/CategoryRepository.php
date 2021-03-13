@@ -1,24 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Repository;
 
 use Doctrine\ORM\QueryBuilder;
 use Tenolo\Bundle\EntityBundle\Repository\BaseEntityRepository;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 
 /**
- * Class CategoryRepository
- *
- * @package Tenolo\Bundle\FAQBundle\Repository
- * @author  Nikita Loges
- * @company tenolo GbR
+ * @method CategoryInterface|null find($id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method CategoryInterface[] findAll()
+ * @method CategoryInterface|null findOneBy(array $criteria, array $orderBy = null)
+ * @method CategoryInterface[] findBy(array $criteria, array $orderBy = null, ?int $limit = null, ?int $offset = null)
  */
 class CategoryRepository extends BaseEntityRepository
 {
-
-    /**
-     * @param QueryBuilder $qb
-     */
-    public function applyEnabledQuery(QueryBuilder $qb)
+    public function applyEnabledQuery(QueryBuilder $qb): void
     {
         $expr = $qb->expr();
 

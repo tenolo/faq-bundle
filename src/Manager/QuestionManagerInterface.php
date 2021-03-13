@@ -1,44 +1,37 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectRepository;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 use Tenolo\Bundle\FAQBundle\Repository\QuestionRepository;
 
 /**
- * Interface QuestionManagerInterface
- *
- * @package Tenolo\Bundle\FAQBundle\Manager
- * @author  Nikita Loges
  * @company tenolo GbR
  */
 interface QuestionManagerInterface
 {
+    /**
+     * @return array<QuestionInterface>
+     */
+    public function retrieveMostRecent(?int $max = null): array;
 
     /**
-     * @param int $max
-     *
-     * @return array|QuestionInterface[]
+     * @return array<QuestionInterface>
      */
-    public function retrieveMostRecent($max = null);
+    public function findWithoutCategory(?int $max = null): array;
 
     /**
-     * @param int $max
-     *
-     * @return array|QuestionInterface[]
+     * @return array<QuestionInterface>
      */
-    public function findWithoutCategory($max = null);
+    public function findByCategory(CategoryInterface $category, ?int $max = null): array;
 
     /**
-     * @param int $max
-     *
-     * @return array|QuestionInterface[]
+     * @return array<QuestionInterface>
      */
-    public function findTop($max = null);
+    public function findTop(?int $max = null): array;
 
-    /**
-     * @return ObjectRepository|QuestionRepository
-     */
-    public function getRepository();
+    public function getRepository(): QuestionRepository;
 }

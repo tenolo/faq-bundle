@@ -1,33 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Manager;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces\CategoryInterface;
 use Tenolo\Bundle\FAQBundle\Repository\CategoryRepository;
 
 /**
- * Interface CategoryManagerInterface
- *
- * @package Tenolo\Bundle\FAQBundle\Manager
- * @author  Nikita Loges
  * @company tenolo GbR
  */
 interface CategoryManagerInterface
 {
-
     /**
      * @return CategoryInterface[]
      */
-    public function findActive();
+    public function findActive(): array;
 
-    /**
-     * @return CategoryInterface|null
-     */
-    public function retrieveFirst();
+    public function retrieveFirst(): ?CategoryInterface;
 
-    /**
-     * @return ObjectRepository|CategoryRepository
-     */
-    public function getRepository();
+    public function getRepository(): CategoryRepository;
 }

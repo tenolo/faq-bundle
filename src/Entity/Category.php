@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\PersistentCollection;
 use Tenolo\Bundle\EntityBundle\Entity\BaseEntity;
 use Tenolo\Bundle\EntityBundle\Entity\Scheme\Enable;
 use Tenolo\Bundle\EntityBundle\Entity\Scheme\Name;
@@ -16,15 +17,10 @@ use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\DefaultRawMaterial;
 use Tenolo\Bundle\SlugifyBundle\Entity\Scheme\Slugify;
 
 /**
- * Class Category
- *
  * @ORM\Entity(repositoryClass="Tenolo\Bundle\FAQBundle\Repository\CategoryRepository")
- *
- * @package Tenolo\Bundle\FAQBundle\Entity
  */
 class Category extends BaseEntity implements CategoryInterface
 {
-
     use Name;
     use Enable;
     use SortOrder;
@@ -32,14 +28,16 @@ class Category extends BaseEntity implements CategoryInterface
     use DefaultRawMaterial;
 
     /**
-     * @var ArrayCollection|PersistentCollection|QuestionInterface[]
      * @ORM\OneToMany(targetEntity="Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface", mappedBy="category")
+     *
+     * @var Collection<int, QuestionInterface>
      */
     protected $questions;
 
     /**
-     * @var string
      * @ORM\Column(type="text", nullable=true)
+     *
+     * @var string|null
      */
     protected $content;
 
@@ -53,67 +51,45 @@ class Category extends BaseEntity implements CategoryInterface
         $this->questions = new ArrayCollection();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setContent($content)
+    public function setContent(?string $content): void
     {
         $this->content = $content;
     }
 
     /**
-     * @inheritDoc
+     * @return Collection<int, QuestionInterface>
      */
-    public function getQuestions()
+    public function getQuestions(): Collection
     {
         return $this->questions;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function hasQuestion(QuestionInterface $question)
+    public function hasQuestion(QuestionInterface $question): bool
     {
         return $this->getQuestions()->contains($question);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addQuestion(QuestionInterface $question)
-    {
-        if (!$this->hasQuestion($question)) {
-            $question->setCategory($this);
-            $this->getQuestions()->add($question);
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function removeQuestion(QuestionInterface $question)
+    public function addQuestion(QuestionInterface $question): void
     {
         if ($this->hasQuestion($question)) {
-            $this->getQuestions()->removeElement($question);
+            return;
         }
+
+        $question->setCategory($this);
+        $this->getQuestions()->add($question);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getSortedQuestions()
+    public function removeQuestion(QuestionInterface $question): void
     {
-        $criteria = Criteria::create();
-        $criteria->orderBy(['sortOrder' => 'ASC']);
+        if (! $this->hasQuestion($question)) {
+            return;
+        }
 
-        return $this->getQuestions()->matching($criteria);
+        $this->getQuestions()->removeElement($question);
     }
 }

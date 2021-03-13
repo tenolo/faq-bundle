@@ -1,30 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Tenolo\Bundle\FAQBundle\Manager\CategoryManagerInterface;
 use Tenolo\Bundle\FAQBundle\Manager\QuestionManagerInterface;
 
-/**
- * Class FaqController
- *
- * @package Tenolo\Bundle\FAQBundle\Controller
- */
-class FaqController extends Controller
-{
+use function count;
 
+class FaqController extends AbstractController
+{
     /** @var CategoryManagerInterface */
     protected $categoryManager;
 
     /** @var QuestionManagerInterface */
     protected $questionManager;
 
-    /**
-     * @param CategoryManagerInterface $categoryManager
-     * @param QuestionManagerInterface $questionManager
-     */
     public function __construct(CategoryManagerInterface $categoryManager, QuestionManagerInterface $questionManager)
     {
         $this->categoryManager = $categoryManager;
@@ -33,10 +28,8 @@ class FaqController extends Controller
 
     /**
      * @Route("", name="tenolo_faq_index")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
@@ -49,22 +42,23 @@ class FaqController extends Controller
 
     /**
      * @Route("/{category}-{slug}", name="tenolo_faq_show")
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function showAction($category)
+    public function showAction(int $category): Response
     {
         $categories = $this->categoryManager->findActive();
-        $category = $this->categoryManager->getRepository()->find($category);
+        $category   = $this->categoryManager->getRepository()->find($category);
 
-        if (!$category || !$categories) {
+        if ($category === null || count($categories) === 0) {
             throw $this->createNotFoundException('You need at least 1 active faq category in the database');
         }
+
+        $questions = $this->questionManager->findByCategory($category);
 
         return $this->render(
             $this->getParameter('tenolo_faq.templates.faq.index'),
             [
                 'category'   => $category,
+                'questions'  => $questions,
             ]
         );
     }

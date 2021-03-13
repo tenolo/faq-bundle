@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -11,19 +13,14 @@ use Tenolo\Bundle\FAQBundle\Entity as BundleEntity;
 use Tenolo\Bundle\FAQBundle\Model\Interfaces as BundleInterfaces;
 
 /**
- * Class TenoloFAQExtension
- *
- * @package Tenolo\Bundle\FAQBundle\DependencyInjection
- * @author  Nikita Loges
  * @company tenolo GbR
  */
 class TenoloFAQExtension extends ConfigurableExtension implements PrependExtensionInterface
 {
-
     /**
      * @inheritdoc
      */
-    public function loadInternal(array $configs, ContainerBuilder $container)
+    public function loadInternal(array $configs, ContainerBuilder $container): void
     {
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.yml');
@@ -34,26 +31,23 @@ class TenoloFAQExtension extends ConfigurableExtension implements PrependExtensi
         $container->setParameter('tenolo_faq.templates.question.show', $configs['templates']['question']['show']);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function prepend(ContainerBuilder $container)
+    public function prepend(ContainerBuilder $container): void
     {
         $container->prependExtensionConfig('doctrine', $this->getDoctrineConfig());
     }
 
     /**
-     * @return array
+     * @return mixed[]
      */
-    protected function getDoctrineConfig()
+    protected function getDoctrineConfig(): array
     {
         return [
             'orm' => [
                 'resolve_target_entities' => [
                     BundleInterfaces\CategoryInterface::class => BundleEntity\Category::class,
                     BundleInterfaces\QuestionInterface::class => BundleEntity\Question::class,
-                ]
-            ]
+                ],
+            ],
         ];
     }
 }

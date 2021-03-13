@@ -1,24 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Repository;
 
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Tenolo\Bundle\EntityBundle\Repository\BaseEntityRepository;
+use Tenolo\Bundle\FAQBundle\Model\Interfaces\QuestionInterface;
 
 /**
- * Class QuestionRepository
- *
- * @package Tenolo\Bundle\FAQBundle\Repository
- * @author  Nikita Loges
- * @company tenolo GbR
+ * @method QuestionInterface|null find($id, ?int $lockMode = null, ?int $lockVersion = null)
+ * @method QuestionInterface[] findAll()
+ * @method QuestionInterface|null findOneBy(array $criteria, array $orderBy = null)
+ * @method QuestionInterface[] findBy(array $criteria, array $orderBy = null, ?int $limit = null, ?int $offset = null)
  */
 class QuestionRepository extends BaseEntityRepository
 {
-
-    /**
-     * @param QueryBuilder $qb
-     */
-    public function applyEnabledQuery(QueryBuilder $qb)
+    public function applyEnabledQuery(QueryBuilder $qb): void
     {
         $expr = $qb->expr();
 
@@ -31,7 +30,7 @@ class QuestionRepository extends BaseEntityRepository
         $qb->orderBy('p.sortOrder', 'ASC');
 
         $qb->setParameter('enable', true);
-        $qb->setParameter('publishAt', new \DateTime());
-        $qb->setParameter('expiresAt', new \DateTime());
+        $qb->setParameter('publishAt', new DateTime());
+        $qb->setParameter('expiresAt', new DateTime());
     }
 }

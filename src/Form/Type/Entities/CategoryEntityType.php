@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tenolo\Bundle\FAQBundle\Form\Type\Entities;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -8,30 +10,19 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Tenolo\Bundle\FAQBundle\Entity\Category;
 
 /**
- * Class CategoryEntityType
- *
- * @package Tenolo\Bundle\FAQBundle\Form\Type\Entities
- * @author  Nikita Loges
  * @company tenolo GbR
  */
 class CategoryEntityType extends AbstractType
 {
-    /**
-     * @inheritDoc
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'class' => Category::class
+            'class' => Category::class,
         ]);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return EntityType::class;
     }
-
 }
